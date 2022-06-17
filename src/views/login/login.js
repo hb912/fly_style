@@ -7,7 +7,7 @@ import { $, setToken } from "/utils.js";
 const emailInput = document.querySelector("#emailInput");
 const passwordInput = document.querySelector("#passwordInput");
 const submitButton = document.querySelector("#submitButton");
-const headerParent = $(".hero");
+const headerParent = $("body");
 
 addAllElements();
 addAllEvents();

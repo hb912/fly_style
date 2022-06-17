@@ -137,11 +137,23 @@ main .section .card-content{
   font-size: 1.5em;
 }
 
-
+/* 푸터 */
 .hero-foot{
-  color: grey;
-  background-color: lightgrey;
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  padding-bottom: 4rem;
+  color: lightgrey;
+  background-color: #404B59;
   font-size: smaller;
+}
+
+.footer-description{
+  padding-left: 4.5rem;
+}
+
+.logo-footer{
+  width: 15rem;
 }
 
 /* 스크롤 업 버튼 */
