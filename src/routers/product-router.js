@@ -24,8 +24,8 @@ const upload = multer({
 const productRouter = Router();
 
 productRouter.post(
-  "/uplodimg", 
-  loginRequired, 
+  "/uplodimg",
+  loginRequired,
   adminRequired,
   upload.single("image-file"),
   async (req, res, next) => {
@@ -63,59 +63,73 @@ productRouter.get("/", async (req, res) => {
 });
 
 //상품 수정 (login 확인, admin 확인)
-productRouter.patch("/:id", /*loginRequired, adminRequired,*/ upload.single("image-file"), async (req, res) => {
-  const { id } = req.params;
-  const { name, price, content, brand, size, category } = req.body;
-  const sizeobj = JSON.parse(size);
-  console.log(sizeobj);
+productRouter.patch(
+  "/:id",
+  /*loginRequired, adminRequired,*/ upload.single("image-file"),
+  async (req, res) => {
+    const { id } = req.params;
+    const { name, price, content, brand, size, category } = req.body;
+    const sizeobj = JSON.parse(size);
+    console.log(sizeobj);
 
-  let productInfo = {
-    name,
-    price,
-    content,
-    brand,
-    size: sizeobj,
-    category,
-  };
-  if (!!req.file) {
-    const { location } = req.file;
-    productInfo.append("Img", location);
+    let productInfo = {
+      name,
+      price,
+      content,
+      brand,
+      size: sizeobj,
+      category,
+    };
+    if (!!req.file) {
+      const { location } = req.file;
+      productInfo = {
+        ...productInfo,
+        Img: location,
+      };
+      // productInfo.append("Img", location);
+    }
+    try {
+      const result = await productService.editProduct(id, productInfo);
+      console.log(result);
+      res.status(201).json(result);
+    } catch (e) {
+      next(e);
+    }
   }
-  try {
-    const result = await productService.editProduct(id, productInfo);
-    console.log(result);
-    res.status(201).json(result);
-  } catch (e) {
-    next(e);
-  }
-});
+);
 
-productRouter.patch("/quantity/:id", /*loginRequired, adminRequired,*/ async (req, res, next) => {
-  const _id = req.params.id;
-  const { size } = req.body;
-  const quantity = Number(req.body.quantity);
-  try {
-    const updatedProduct = await productService.updateQuantity({
-      _id,
-      quantity,
-      size,
-    });
-    res.json(updatedProduct);
-  } catch (e) {
-    next(e);
+productRouter.patch(
+  "/quantity/:id",
+  /*loginRequired, adminRequired,*/ async (req, res, next) => {
+    const _id = req.params.id;
+    const { size } = req.body;
+    const quantity = Number(req.body.quantity);
+    try {
+      const updatedProduct = await productService.updateQuantity({
+        _id,
+        quantity,
+        size,
+      });
+      res.json(updatedProduct);
+    } catch (e) {
+      next(e);
+    }
   }
-});
+);
 
 //상품 삭제 (login 확인, admin 확인)
-productRouter.delete("/:id", /*loginRequired, adminRequired,*/ async (req, res, next) => {
-  const productId = req.params.id;
-  try {
-    const result = await productService.deleteProduct(productId);
-    res.json(result);
-  } catch (e) {
-    next(e);
+productRouter.delete(
+  "/:id",
+  /*loginRequired, adminRequired,*/ async (req, res, next) => {
+    const productId = req.params.id;
+    try {
+      const result = await productService.deleteProduct(productId);
+      res.json(result);
+    } catch (e) {
+      next(e);
+    }
   }
-});
+);
 
 ///api/product/shirts
 //카테고리별 상품
