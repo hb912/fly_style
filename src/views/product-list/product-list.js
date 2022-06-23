@@ -1,5 +1,5 @@
 import * as Api from "../api.js";
-import { $ } from "../utils.js";
+import { $, getRole } from "../utils.js";
 import header from "/header.js";
 const URLSearch = new URLSearchParams(location.search);
 const page = Number(URLSearch.get("page")) || 1;
@@ -86,7 +86,7 @@ function addProductsListData(productData) {
   //"/product-detail?id="
   productInnerData += `
     <div class="card product-item" id="${productData._id}">
-    <a href="/product?_id=${productData._id}">
+    <a class="link" href="/product?_id=${productData._id}">
         <div class="card-image">
             <figure class="image is-square">
                 <img src="${productData.Img}" alt="Placeholder image">
@@ -126,6 +126,7 @@ function pagination(productData, cookieCategory) {
 productData.productsPerPage.map((productData) =>
   addProductsListData(productData)
 );
+
 categoryData.map((categoryData) => addCategoryListData(categoryData));
 console.log("----------------------------");
 console.log(productData.categoryName);
@@ -138,6 +139,20 @@ if (productData.categoryName == "null") {
   selectedCategory.innerText = "TOP";
 } else {
   selectedCategory.innerText = productData.categoryName;
+}
+if (getRole() === "admin") {
+  const links = document.querySelectorAll(".link");
+  for (let i = 0; i < links.length; i++) {
+    links[
+      i
+    ].href = `/productform?product=${productData.productsPerPage[i]._id}`;
+  }
+  const createBtn = document.createElement("a");
+  createBtn.innerHTML = "+";
+  createBtn.className = "button is-large is-outlined";
+  createBtn.id = "createBtn";
+  createBtn.href = `/productform?category=${category}`;
+  productSection.appendChild(createBtn);
 }
 //scroll up button
 function scrollUp(e) {
