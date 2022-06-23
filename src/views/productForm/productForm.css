@@ -1,8 +1,31 @@
-
-
-#titleOfProductForm{
-    color: #5CA2FF!important;
+#titleOfProductForm {
+  color: #5ca2ff !important;
 }
-.button.is-primary{
-    background-color: #5CA2FF;
+.button.is-primary {
+  background-color: #5ca2ff;
+}
+
+#deleteBtn {
+  margin-top: 10px;
+}
+
+.button {
+  height: 60px;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+.sizeList {
+  margin-top: 10px;
+}
+.sizeField,
+.quantityField {
+  margin-left: 10px;
+  width: 70px;
+}
+
+#inventorySubmit {
+  height: 40px;
+  width: 80px;
+  font-size: 15px;
 }
