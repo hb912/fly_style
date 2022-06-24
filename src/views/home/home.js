@@ -34,23 +34,23 @@ async function addAllElements() {
 setCookie('categoryCookie', URLSearch.get("category"));
 
 //카테고리쿠키 생성함수
-function setCookie(cName, cValue){
-    let cookies = cName + '=' + cValue + '; path=/ ';
+function setCookie(cookieName, cookieValue){
+    let cookies = cookieName + '=' + cookieValue + '; path=/ ';
     document.cookie = cookies;
 }
 //카테고리쿠키 가져오기
-function getCookie(cName){
-    cName = cName + '=';
+function getCookie(cookieName){
+    cookieName = cookieName + '=';
     let cookieData = document.cookie;
-    let start = cookieData.indexOf(cName);
-    let cValue = '';
+    let start = cookieData.indexOf(cookieName);
+    let cookieValue = '';
     if(start != -1){
-        start += cName.length;
+        start += cookieName.length;
         let end = cookieData.indexOf(';', start);
         if (end == -1) end = cookieData.length;
-        cValue = cookieData.substring(start, end);
+        cookieValue = cookieData.substring(start, end);
     }
-    return cValue;
+    return cookieValue;
 }
 
 

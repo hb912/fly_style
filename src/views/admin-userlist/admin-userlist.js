@@ -1,13 +1,15 @@
 import * as Api from "../api.js";
 
+
 const adminUserList = document.getElementById('adminUserList');
 
 const userListData = await Api.get(`/api/admins/userList`);
 console.log(userListData);
 
+
 let innerUserData = '';
 
-function userListFunc(userListData){
+function renderUserList(userListData){
     innerUserData += `
         <td>${userListData.fullName}</td>
         <td>${userListData.role}</td>
@@ -15,5 +17,7 @@ function userListFunc(userListData){
         `
 }
 
-userListData.map((userListData) => userListFunc(userListData));
+
+
+userListData.map((userListData) => renderUserList(userListData));
 adminUserList.innerHTML = innerUserData;
