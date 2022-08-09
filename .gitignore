@@ -6,3 +6,4 @@ yarn.lock
 
 ### my ignore ###
 src/config/s3.json
+.env
